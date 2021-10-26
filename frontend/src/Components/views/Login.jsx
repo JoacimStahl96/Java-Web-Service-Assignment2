@@ -11,7 +11,14 @@ const Login = () => {
 		setUserState({ ...userState, [e.target.name]: e.target.value });
 	};
 
-	const data = AuthService("/user", "/login");
+	const loginUser = async (e) => {
+		e.preventDefault();
+		const data = await AuthService("/user", "/login");
+
+		/*   if( om token inte är tom / undefined / null  så hoppar vi till lämplig endpoint){
+            history.push("/")
+        } */
+	};
 
 	return (
 		<div style={{ maxWidth: "60rem", textAlign: "center", margin: "auto" }}>

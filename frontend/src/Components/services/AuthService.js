@@ -7,8 +7,10 @@ const AuthService = async (route, action, method, data) => {
 		if (method) {
 			return {
 				method: method,
-				Headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(data),
+				headers: {
+					"Content-Type": "application/json",
+				},
 			};
 		}
 		return undefined;
@@ -16,8 +18,14 @@ const AuthService = async (route, action, method, data) => {
 	try {
 		const res = await fetch(`/${route}/${action}`, _method(method));
 		if (res !== null) {
-			const data = await res.json;
-			return data;
+			const contentType = res.headers.get("Content-Type");
+			if (contentType.indexOf("application/json") !== -1) {
+				const data = res.json();
+				return data;
+			} else {
+				const data = res.text();
+				return data;
+			}
 		} else {
 			return _unAuthorized;
 		}
