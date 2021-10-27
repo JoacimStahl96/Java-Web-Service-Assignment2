@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import AuthService from "../services/AuthService";
 
 const Register = () => {
 	const [user, setUser] = useState({ username: "", password: "" });
-	let history = useHistory();
+	const [message, setMessage] = useState("");
 
 	const changeUserData = (e) => {
 		setUser({ ...user, [e.target.name]: e.target.value });
@@ -15,16 +14,13 @@ const Register = () => {
 		const data = await AuthService("user", "register", "put", user);
 
 		console.log(data);
-
-		//	const { user, response } = data;
-		/*	if (data != null || data !== undefined) {
-			history.push("/login");
-		} */
+		setMessage(data);
 	};
 
 	return (
 		<div style={{ maxWidth: "60rem", textAlign: "center", margin: "auto" }}>
 			<h1>Register</h1>
+			<div>{message}</div>
 			<form onSubmit={registerNewUser}>
 				<input
 					type="text"
