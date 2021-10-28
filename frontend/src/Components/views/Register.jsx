@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AuthService from "../services/AuthService";
 
 const Register = () => {
 	const [user, setUser] = useState({ username: "", password: "" });
@@ -11,7 +10,15 @@ const Register = () => {
 
 	const registerNewUser = async (e) => {
 		e.preventDefault();
-		const data = await AuthService("user", "register", "put", user);
+
+		const response = await fetch("/user/register", {
+			method: "PUT",
+			body: JSON.stringify(user),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		const data = await response.text();
 
 		console.log(data);
 		setMessage(data);
