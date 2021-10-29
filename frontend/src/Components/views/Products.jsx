@@ -104,6 +104,7 @@ const Products = () => {
 		const data = await response.json();
 		setFavorites(data);
 	};
+
 	return (
 		<div style={{ maxWidth: "60rem", textAlign: "center", margin: "auto" }}>
 			<button onClick={logOutHandler}>Log out</button>
